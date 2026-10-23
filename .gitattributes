@@ -1,0 +1,2 @@
+# Keep the signature file in the repository, but don't count it as source code.
+signature.ws linguist-detectable=false
