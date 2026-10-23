@@ -4,6 +4,8 @@
 
 Every push and pull request runs a GLSL syntax check on the current terrain vertex and fragment shaders using `glslangValidator`. The workflow also checks that the essential shader-pack files and `signature.ws` exist.
 
+The terrain prototype currently samples Minecraft's lightmap and discards nearly transparent texels, but the smoke test only checks syntax and required files. It does not verify the visual result of those changes.
+
 This catches basic shader syntax errors and accidental removal of required project files. It **does not** prove that the shader pack loads or renders correctly in Iris.
 
 ## Required in-game test
