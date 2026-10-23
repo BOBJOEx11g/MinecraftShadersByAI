@@ -16,9 +16,10 @@
 - [ ] Keep a vanilla-like fallback for unsupported paths.
 
 ## 2 — Lighting and materials
-- [ ] Implement shadow mapping with adjustable resolution and filtering.
-- [ ] Improve water appearance with modest reflections and animated surface detail.
-- [ ] Add subtle foliage movement and atmospheric effects.
+- [x] Add an initial shadow-map pass with four-tap filtering (runtime validation pending).
+- [ ] Tune shadow bias, distance, resolution, and filtering after in-game tests.
+- [ ] Improve water appearance with depth-aware colour, animated surface detail, and reflections where feasible.
+- [ ] Add custom sky/cloud rendering and subtle foliage movement after the lighting baseline is stable.
 - [ ] Tune translucent materials and emissive blocks.
 - [ ] Compare day, night, caves, rain, snow, and Nether/End where supported.
 
@@ -44,4 +45,4 @@
 - [ ] Preserve any notices required by the licence and clearly label adapted code.
 - [ ] Add a release ZIP and reproducible installation notes only after the pack loads successfully.
 
-**Current status:** the terrain prototype and new experimental final sharpening pass are unverified in-game. Validate the target Iris runtime before treating either as working. The FSR experiment is documented in `docs/FSR_EXPERIMENT.md`; the current filter is not AMD FSR.
+**Current status:** an initial shadow-map pass and experimental final sharpening pass are committed, but both are unverified in-game. Validate the target Iris runtime before treating them as working. Next visual milestones are water, sky/clouds, and atmospheric colour. The FSR experiment is documented in `docs/FSR_EXPERIMENT.md`; the current filter is not AMD FSR.
