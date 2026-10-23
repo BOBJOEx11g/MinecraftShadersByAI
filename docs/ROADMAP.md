@@ -10,6 +10,7 @@
 
 ## 1 — Realistic baseline, low cost
 - [ ] Establish sensible linear/sRGB handling and consistent colour grading.
+- [x] Add an experimental fullscreen spatial-sharpening pass as the first post-processing research step (runtime validation pending).
 - [ ] Tune daylight, sky, fog, and nighttime colour without crushing shadows.
 - [ ] Add configurable ambient shading only where it is stable and inexpensive.
 - [ ] Keep a vanilla-like fallback for unsupported paths.
@@ -32,6 +33,7 @@
 - [ ] Test on integrated graphics and discrete GPUs from more than one vendor when available.
 - [ ] Test multiple supported Minecraft/Iris versions and driver versions.
 - [ ] Track frame time, memory use, visual artifacts, and compile failures.
+- [ ] Investigate shaderpack-only reduced-resolution rendering and edge-aware upscaling; see `docs/FSR_EXPERIMENT.md`.
 - [ ] Keep advanced effects from becoming mandatory dependencies.
 - [ ] Publish a compatibility matrix based on actual tests, not guesses.
 
@@ -42,4 +44,4 @@
 - [ ] Preserve any notices required by the licence and clearly label adapted code.
 - [ ] Add a release ZIP and reproducible installation notes only after the pack loads successfully.
 
-**Current status:** the prototype is unverified in-game. The immediate priority is a clean load and a repeatable baseline, not adding costly effects prematurely.
+**Current status:** the terrain prototype and new experimental final sharpening pass are unverified in-game. Validate the target Iris runtime before treating either as working. The FSR experiment is documented in `docs/FSR_EXPERIMENT.md`; the current filter is not AMD FSR.
