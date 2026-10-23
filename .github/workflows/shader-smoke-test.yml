@@ -23,6 +23,12 @@ jobs:
       - name: Validate terrain fragment shader
         run: glslangValidator -S frag shaders/gbuffers_terrain.fsh
 
+      - name: Validate shadow vertex shader
+        run: glslangValidator -S vert shaders/shadow.vsh
+
+      - name: Validate shadow fragment shader
+        run: glslangValidator -S frag shaders/shadow.fsh
+
       - name: Validate final vertex shader
         run: glslangValidator -S vert shaders/final.vsh
 
@@ -35,6 +41,8 @@ jobs:
           test -f shaders/shaders.properties
           test -f shaders/gbuffers_terrain.vsh
           test -f shaders/gbuffers_terrain.fsh
+          test -f shaders/shadow.vsh
+          test -f shaders/shadow.fsh
           test -f shaders/final.vsh
           test -f shaders/final.fsh
           test -f signature.ws
