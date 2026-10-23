@@ -4,7 +4,7 @@
 
 Every push and pull request runs a GLSL syntax check on the current terrain vertex and fragment shaders using `glslangValidator`. The workflow also checks that the essential shader-pack files and `signature.ws` exist.
 
-The terrain prototype currently samples Minecraft's lightmap and discards nearly transparent texels, but the smoke test only checks syntax and required files. It does not verify the visual result of those changes.
+The terrain prototype currently samples Minecraft's lightmap and discards nearly transparent texels. An experimental fullscreen sharpening pass now lives in `shaders/final.vsh` and `shaders/final.fsh`; it is FSR-inspired, not a port of AMD FSR. The smoke test only checks syntax and required files, and does not verify the visual result of these changes.
 
 This catches basic shader syntax errors and accidental removal of required project files. It **does not** prove that the shader pack loads or renders correctly in Iris.
 
@@ -17,8 +17,9 @@ A real Iris runtime test is still required because this repository's CI runner d
 3. Confirm `shaders/` is at the ZIP root, not nested inside an extra repository folder.
 4. Put the ZIP in the Minecraft `shaderpacks` folder and select it in Iris.
 5. Check whether Iris accepts the pack and whether terrain renders normally.
-6. If it fails, capture the Iris shader compile log and the latest game log.
-7. Test a normal world in daylight, at night, underground, and in another dimension if the pack loads.
+6. Check whether the final post-processing pass loads; compare sharpness and inspect edges for halos, then test with it disabled if anything looks wrong.
+7. If it fails, capture the Iris shader compile log and the latest game log.
+8. Test a normal world in daylight, at night, underground, and in another dimension if the pack loads.
 
 ## Interpreting results
 
