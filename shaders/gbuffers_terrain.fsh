@@ -14,6 +14,7 @@ varying vec2 texcoord;
 varying vec2 lmcoord;
 varying vec4 vertexColor;
 varying vec3 feetPlayerPos;
+varying vec3 worldNormal;
 
 float sampleShadow(vec3 shadowCoord) {
     if (shadowCoord.x <= 0.0 || shadowCoord.x >= 1.0 ||
@@ -42,13 +43,20 @@ void main() {
 
     vec3 illumination = texture2D(lightmap, lmcoord).rgb;
 
-    vec3 shadowViewPos = (shadowModelView * vec4(feetPlayerPos, 1.0)).xyz;
+    // A small world-normal offset helps reduce self-shadowing before the
+    // depth-space bias is applied. Keep both conservative to limit detachment.
+    vec3 biasedWorldPos = feetPlayerPos + normalize(worldNormal) * 0.015;
+    vec3 shadowViewPos = (shadowModelView * vec4(biasedWorldPos, 1.0)).xyz;
     vec4 shadowClipPos = shadowProjection * vec4(shadowViewPos, 1.0);
-    shadowClipPos.z -= 0.0012;
-    vec3 shadowNDCPos = shadowClipPos.xyz / shadowClipPos.w;
-    vec3 shadowCoord = shadowNDCPos * 0.5 + 0.5;
 
-    float visibility = sampleShadow(shadowCoord);
+    float visibility = 1.0;
+    if (abs(shadowClipPos.w) > 0.00001) {
+        shadowClipPos.z -= 0.0012;
+        vec3 shadowNDCPos = shadowClipPos.xyz / shadowClipPos.w;
+        vec3 shadowCoord = shadowNDCPos * 0.5 + 0.5;
+        visibility = sampleShadow(shadowCoord);
+    }
+
     float skyLight = clamp(illumination.g * 1.5, 0.0, 1.0);
     float directLight = mix(1.0, mix(0.38, 1.0, visibility), skyLight);
 
