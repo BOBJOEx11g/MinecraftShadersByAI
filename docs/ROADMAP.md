@@ -4,6 +4,7 @@
 - [x] Create initial repository structure.
 - [x] Add an initial terrain shader prototype.
 - [ ] Validate the current pack in the target Minecraft + Iris version.
+- [x] Add initial terrain lightmap sampling and transparent-texel handling.
 - [ ] Fix every compile/load error before adding complex effects.
 - [ ] Record the exact tested game, Iris, OS, GPU, and driver versions.
 
