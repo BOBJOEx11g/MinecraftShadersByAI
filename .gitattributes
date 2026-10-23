@@ -1,2 +1,4 @@
 # Tell GitHub Linguist to classify the whitespace-only signature as the Whitespace language.
-signature.ws linguist-language=Whitespace
+# signature.ws linguist-language=Whitespace
+
+#Yo GPT, file does not seem to be working correctly as Github just ignores it entirely and just says 100% GLSL, so I turned it into a comment.
