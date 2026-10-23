@@ -1,3 +1,2 @@
-# Keep the signature file in the repository, but don't count it as source code.
-# signature.ws linguist-detectable=false
-# Set to comment because it looks cool to have .ws
+# Tell GitHub Linguist to classify the whitespace-only signature as the Whitespace language.
+signature.ws linguist-language=Whitespace
