@@ -34,15 +34,11 @@ float cloudDensity(vec3 worldPos) {
     float broad = cloudNoise(p);
     float detail = cloudNoise(p * 2.7 + vec2(19.3, 7.1));
     float shape = broad * 0.75 + detail * 0.25;
-
-    // Soft coverage threshold leaves broken edges instead of a uniform sheet.
     return smoothstep(0.53, 0.72, shape);
 }
 
 vec4 renderClouds(vec4 sceneColor) {
     float depth = texture2D(depthtex0, texcoord).r;
-
-    // Do not draw clouds over terrain, entities, or other geometry.
     if (depth < 0.99999) {
         return sceneColor;
     }
@@ -52,19 +48,14 @@ vec4 renderClouds(vec4 sceneColor) {
     vec3 viewRay = normalize(viewH.xyz / max(abs(viewH.w), 0.00001));
     vec3 worldRay = normalize(mat3(gbufferModelViewInverse) * viewRay);
 
-    // A bounded cloud slab; avoid near-horizontal rays that would create
-    // enormous distances and unstable coordinates.
     if (worldRay.y < 0.035) {
         return sceneColor;
     }
 
     const float cloudBase = 150.0;
     const float cloudTop = 190.0;
-    float tEnter = (cloudBase - cameraPosition.y) / worldRay.y;
-    float tExit = (cloudTop - cameraPosition.y) / worldRay.y;
-    tEnter = max(tEnter, 0.0);
-    tExit = max(tExit, 0.0);
-
+    float tEnter = max((cloudBase - cameraPosition.y) / worldRay.y, 0.0);
+    float tExit = max((cloudTop - cameraPosition.y) / worldRay.y, 0.0);
     if (tExit <= tEnter) {
         return sceneColor;
     }
@@ -78,9 +69,8 @@ vec4 renderClouds(vec4 sceneColor) {
     for (int i = 0; i < 8; i++) {
         float t = tEnter + (float(i) + 0.5) * stepLength;
         vec3 worldPos = cameraPosition + worldRay * t;
-
-        // Keep noise coordinates numerically stable at large world positions.
         worldPos.xz = mod(worldPos.xz, 8192.0);
+
         float height01 = clamp((worldPos.y - cloudBase) / (cloudTop - cloudBase), 0.0, 1.0);
         float verticalProfile = smoothstep(0.0, 0.22, height01)
                               * (1.0 - smoothstep(0.68, 1.0, height01));
@@ -95,7 +85,7 @@ vec4 renderClouds(vec4 sceneColor) {
         return sceneColor;
     }
 
-    float lightFactor = lightingSum / max(densitySum * 8.0, 0.0001);
+    float lightFactor = lightingSum / max(densitySum * (22.0 / max(stepLength, 0.0001)), 0.0001);
     vec3 cloudColor = mix(vec3(0.34, 0.39, 0.48), vec3(0.96, 0.97, 1.0), clamp(lightFactor, 0.0, 1.0));
     return vec4(mix(sceneColor.rgb, cloudColor, alpha), sceneColor.a);
 }
