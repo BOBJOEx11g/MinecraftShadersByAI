@@ -16,10 +16,11 @@
 - [ ] Keep a vanilla-like fallback for unsupported paths.
 
 ## 2 — Lighting and materials
-- [x] Add an initial shadow-map pass with four-tap filtering (runtime validation pending).
+- [x] Add an initial shadow-map pass with four-tap filtering and a conservative normal-aware bias prototype (runtime validation pending).
 - [ ] Tune shadow bias, distance, resolution, and filtering after in-game tests.
+- [ ] Add a procedural, sky-depth-masked cloud-layer prototype with animated noise and a short ray-march (runtime validation pending).
 - [ ] Improve water appearance with depth-aware colour, animated surface detail, and reflections where feasible.
-- [ ] Add custom sky/cloud rendering and subtle foliage movement after the lighting baseline is stable.
+- [ ] Improve cloud volume, lighting, and cloud-shadow integration after the first pass is validated.
 - [ ] Tune translucent materials and emissive blocks.
 - [ ] Compare day, night, caves, rain, snow, and Nether/End where supported.
 
@@ -45,4 +46,4 @@
 - [ ] Preserve any notices required by the licence and clearly label adapted code.
 - [ ] Add a release ZIP and reproducible installation notes only after the pack loads successfully.
 
-**Current status:** an initial shadow-map pass and experimental final sharpening pass are committed, but both are unverified in-game. Validate the target Iris runtime before treating them as working. Next visual milestones are water, sky/clouds, and atmospheric colour. The FSR experiment is documented in `docs/FSR_EXPERIMENT.md`; the current filter is not AMD FSR.
+**Current status:** the terrain shadow prototype now has a conservative normal offset, and an original procedural cloud pass has been added. Neither has been validated in Minecraft + Iris yet. The cloud pass is a lightweight starting point, not Bliss's full volumetric system. The FSR experiment is documented in `docs/FSR_EXPERIMENT.md`; the current filter is not AMD FSR.
