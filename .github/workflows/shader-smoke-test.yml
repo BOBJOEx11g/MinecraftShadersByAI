@@ -1,0 +1,32 @@
+name: Shader smoke test
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  glsl-smoke-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Install GLSL validator
+        run: |
+          sudo apt-get update
+          sudo apt-get install --yes glslang-tools
+
+      - name: Validate terrain vertex shader
+        run: glslangValidator -S vert shaders/gbuffers_terrain.vsh
+
+      - name: Validate terrain fragment shader
+        run: glslangValidator -S frag shaders/gbuffers_terrain.fsh
+
+      - name: Verify required project files
+        run: |
+          test -f README.md
+          test -f shaders/shaders.properties
+          test -f shaders/gbuffers_terrain.vsh
+          test -f shaders/gbuffers_terrain.fsh
+          test -f signature.ws
